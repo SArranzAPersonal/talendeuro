@@ -1,0 +1,224 @@
+package routines;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import org.apache.commons.lang3.StringUtils;
+
+
+/*
+ * user specification: the function's comment should contain keys as follows: 1. write about the function's comment.but
+ * it must be before the "{talendTypes}" key.
+ * 
+ * 2. {talendTypes} 's value must be talend Type, it is required . its value should be one of: String, char | Character,
+ * long | Long, int | Integer, boolean | Boolean, byte | Byte, Date, double | Double, float | Float, Object, short |
+ * Short
+ * 
+ * 3. {Category} define a category for the Function. it is required. its value is user-defined .
+ * 
+ * 4. {param} 's format is: {param} <type>[(<default value or closed list values>)] <name>[ : <comment>]
+ * 
+ * <type> 's value should be one of: string, int, list, double, object, boolean, long, char, date. <name>'s value is the
+ * Function's parameter name. the {param} is optional. so if you the Function without the parameters. the {param} don't
+ * added. you can have many parameters for the Function.
+ * 
+ * 5. {example} gives a example for the Function. it is optional.
+ */
+public class EPDIST {
+
+    /**
+     * helloExample: not return value, only print "hello" + message.
+     * 
+     * 
+     * {talendTypes} String
+     * 
+     * {Category} User Defined
+     * 
+     * {param} string("world") input: The string need to be printed.
+     * 
+     * {example} helloExemple("world") # hello world !.
+     */
+	
+	public static final double ERROR_CANTIDAD   = 133.7658;
+	public static final double ERROR_IMPORTE   = 133.7658;
+
+
+    public static double calcularCantidad(String var) {
+    	if (var == null || StringUtils.isEmpty(var) || StringUtils.isBlank(var)) 
+    		return ERROR_CANTIDAD;
+    	String newvar = var.replace(",", ".");
+    	Double vald = Double.valueOf(newvar)*100;
+    	return vald;
+    }
+    
+    public static double calcularImporte(String var) {
+    	if (var == null || StringUtils.isEmpty(var) || StringUtils.isBlank(var)) 
+    		return ERROR_IMPORTE;
+    	String newvar = var.replace(",", ".");
+    	Double vald = Double.valueOf(newvar)*100;
+    	return vald;
+    }
+
+   
+    
+    public static String calcularEstado(boolean esAlbaranCadenas, 
+			boolean albCadenasPeriodoOK, 
+			boolean albDtoCompPeriodoOK, 
+			int numLineasAlbaran,
+			int sumLineasAlbaran,
+			String numFactura, 
+			String FechaFactura,
+			int controlValidaciones,
+			String numAlbaran)
+    {
+		String state = null;
+		//System.out.println("albaran: " + numAlbaran + "; validaciones = " + controlValidaciones);
+		if(controlValidaciones == 0) {
+			if(!StringUtils.isEmpty(FechaFactura) && !StringUtils.isBlank(FechaFactura) && 
+			   !StringUtils.isEmpty(numFactura) && !StringUtils.isBlank(numFactura))
+					state = "FA";
+			else
+				state = "EN";
+		}
+		else
+			state = "IN";
+		
+		if (numLineasAlbaran == 1 && sumLineasAlbaran == 0)
+			state = "CA";
+		
+		return state;
+    }
+    
+    public static String JulianToDate(int date) {  
+   	 int year = (date / 1000) + 1900;  
+   	 int dayOfYear = date % 1000;  
+   	 Calendar calendar = Calendar.getInstance();  
+   	 calendar.set(Calendar.YEAR, year);  
+   	 calendar.set(Calendar.DAY_OF_YEAR, dayOfYear);
+   	    DateFormat fmt2 = new SimpleDateFormat("yyyyMMdd"); 
+   	 return fmt2.format(calendar.getTime());  
+   	 }
+       
+       /**
+        * JulianToDateDMY: Retorna Fecha Juliana (integer) como Fecha (string) DD/MM/YYYY
+        * 
+        * {talendTypes} Integer
+        * 
+        * {Category} JulianToDate
+        * 
+        * {param} integer(JDE Julian) input: Fecha Juliana a convertir yyyddd.
+        * 
+        * {example} JulianToDateDMY(112152) # Retorna 31/05/2012
+        * @throws ParseException 
+        */
+       
+       public static String JulianToDateDMY(int date) {  
+      	 int year = (date / 1000) + 1900;  
+      	 int dayOfYear = date % 1000;  
+      	 Calendar calendar = Calendar.getInstance();  
+      	 calendar.set(Calendar.YEAR, year);  
+      	 calendar.set(Calendar.DAY_OF_YEAR, dayOfYear);
+      	    DateFormat fmt2 = new SimpleDateFormat("dd/MM/yyyy"); 
+      	 return fmt2.format(calendar.getTime());  
+      	 }
+       
+       /**
+        * JulianToDateDMY: Retorna Fecha Juliana (integer) como Fecha (string) YYYY-MM-DD
+        * 
+        * {talendTypes} Integer
+        * 
+        * {Category} JulianToDate
+        * 
+        * {param} integer(JDE Julian) input: Fecha Juliana a convertir yyyddd.
+        * 
+        * {example} JulianToDateDMY(112152) # Retorna 2012-05-31
+        * @throws ParseException 
+        */
+       
+       public static String JulianToDateDMYSep(int date) {  
+      	 int year = (date / 1000) + 1900;  
+      	 int dayOfYear = date % 1000;  
+      	 Calendar calendar = Calendar.getInstance();  
+      	 calendar.set(Calendar.YEAR, year);  
+      	 calendar.set(Calendar.DAY_OF_YEAR, dayOfYear);
+      	    DateFormat fmt2 = new SimpleDateFormat("yyyy-MM-dd"); 
+      	 return fmt2.format(calendar.getTime());  
+      	 }
+       
+       
+  	 /**
+        * DateToJulian: Retorna Fecha Juliana (integer) de Fecha (date) YYYYMMDD
+        * 
+        * {talendTypes} Integer
+        * 
+        * {Category} JulianToDate
+        * 
+        * {param} Date (JDE Julian) input: Fecha a convertir yyyymmdd.
+        * 
+        * {example} DateToJulian(20120531) # Retorna 112152
+        * @throws ParseException 
+        */
+       public static String DateToJulian(Date date) {
+
+           String strDate = "0";
+           SimpleDateFormat sdf = new SimpleDateFormat("1yyDDD");
+
+           if (date != null) {
+               try {
+                   strDate = sdf.format(date);
+               } catch (Throwable t) {
+                   t.printStackTrace();
+               }
+           }
+
+           return strDate;
+       }
+       
+       public static Date JulianToDate_date(int date) {  
+      	 int year = (date / 1000) + 1900;  
+      	 int dayOfYear = date % 1000;  
+      	 Calendar calendar = Calendar.getInstance();  
+      	 calendar.set(Calendar.YEAR, year);  
+      	 calendar.set(Calendar.DAY_OF_YEAR, dayOfYear);
+      
+      	 return calendar.getTime();  
+      	 }
+       
+       /**
+        * JulianToDateDMY: Retorna Fecha Juliana (integer) como Fecha (date)
+        * 
+        * {talendTypes} Integer
+        * 
+        * {Category} JulianToDate
+        * 
+        * {param} integer(JDE Julian) input: Fecha Juliana a convertir yyyddd.
+        * 
+        * {example} JulianToDateObject(112152) # Retorna Date
+        * @throws ParseException 
+        */
+       
+       public static Date JulianToDateObject(int date) {  
+      	 int year = (date / 1000) + 1900;  
+      	 int dayOfYear = date % 1000;  
+      	 Calendar calendar = Calendar.getInstance();  
+      	 calendar.set(Calendar.YEAR, year);  
+      	 calendar.set(Calendar.DAY_OF_YEAR, dayOfYear);
+      	 return calendar.getTime();  
+      	 }
+       
+       public static String StringToJulian(String date) {
+       	DateFormat fmt2 = new SimpleDateFormat("dd/MM/yyyy");
+       	String fecha = "";
+       	try {
+				fecha = DateToJulian(fmt2.parse(date));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+       	return fecha;
+       }
+ 
+
+}

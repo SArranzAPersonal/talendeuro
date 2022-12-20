@@ -1,0 +1,23 @@
+{
+  "itemId" : "_cdeucH-NEe2snKk6GIcmsQ",
+  "contextList" : [ {
+    "contextName" : "Preproduccion",
+    "repoId" : "_xeaKkH-NEe2snKk6GIcmsQ",
+    "parameterList" : [ {
+      "id" : "_MVT16XcaEe2x452FC4ICjw",
+      "name" : "JDE_AdditionalParams"
+    }, {
+      "id" : "_MVT163caEe2x452FC4ICjw",
+      "name" : "JDE_Database"
+    }, {
+      "id" : "_MVT16ncaEe2x452FC4ICjw",
+      "name" : "JDE_Login"
+    }, {
+      "id" : "_MVT16HcaEe2x452FC4ICjw",
+      "name" : "JDE_Password"
+    }, {
+      "id" : "_MVT153caEe2x452FC4ICjw",
+      "name" : "JDE_Server"
+    } ]
+  } ]
+}
